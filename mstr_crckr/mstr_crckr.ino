@@ -1,7 +1,7 @@
 #include <AFMotor.h>
 
 int SPR = 200;       // steps per revolution
-int SPD = SPR / 40; // steps per degree
+int SPD = SPR / 40;  // steps per degree
 int clockwise = BACKWARD;
 int counterclockwise = FORWARD;
 int stepType = SINGLE;
@@ -36,6 +36,20 @@ void loop() {
   
 }
 
+void stepThroughSolutions(int[] n1, int[] n2, int n3) {
+  
+  for(int i = 0; i < 10; i++) {
+    for(int j = 0; j < 10; j++) {
+      solve(n1[i], n2[j], n3);
+      
+      // someway to tell if its done or not
+      if(true) {
+        last_two_steps(n2, n3);
+      }
+    }
+  }
+  
+}
 void solve(int n_1, int n_2, int n_3) {
   first_step(n_1, clockwise);
   second_step(n_2, counterclockwise);
@@ -56,20 +70,27 @@ void third_step(int deg, int orientation) {
   go_to_degree(deg, orientation);
 }
 
+void last_two_steps(int n_2, int n_3) {
+  go_to_degree(n_2, COUNTERCLOCKWISE);
+  go_to_degree(n_3, CLOCKWISE);
+}
+
 void go_to_degree(int deg, int orientation) {
   int dist = 0;
   if(orientation == clockwise) {
     if(deg > current) {
       dist = 40 - deg + current;
-    } else {
+    }
+    else {
       dist = current - deg;
     }
     current = (40 + current - dist) % 40;
   }
-  else if(orientation == counterclockwise) {
+  else {
     if(deg > current) {
       dist = deg - current;
-    } else {
+    }
+    else {
       dist = 40 - current + deg;
     }
     current = (current + dist) % 40;
