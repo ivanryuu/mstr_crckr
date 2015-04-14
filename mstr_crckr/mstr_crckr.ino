@@ -36,20 +36,28 @@ void loop() {
   
 }
 
-void stepThroughSolutions(int[] n1, int[] n2, int n3) {
+void 
+
+void stepThroughSolutions() {
   
   for(int i = 0; i < 10; i++) {
+    setupMove(n1[i]);
     for(int j = 0; j < 10; j++) {
-      solve(n1[i], n2[j], n3);
+      last_two_steps(n2[j], n3);
       
       // someway to tell if its done or not
-      if(true) {
-        last_two_steps(n2, n3);
+      if(done()) {
+        return;
       }
     }
   }
-  
 }
+
+void setupMove(int n_1) {
+  first_step(n1, clockwise);
+  motor.step(SPR, COUNTERCLOCKWISE, SINGLE);  
+}
+
 void solve(int n_1, int n_2, int n_3) {
   first_step(n_1, clockwise);
   second_step(n_2, counterclockwise);
@@ -98,6 +106,10 @@ void go_to_degree(int deg, int orientation) {
   
   
   motor.step(dist * SPD, orientation, stepType);
+}
+
+boolean done() {
+  return false;
 }
 
 void get_n1() {
