@@ -7,6 +7,11 @@ int counterclockwise = FORWARD;
 int stepType = SINGLE;
 int current = 0;
 
+
+int n1[10];
+int n2[10];
+int n3 = 7;
+
 int limitswitch = 31;
 AF_Stepper motor(SPR, 1);
 
@@ -26,15 +31,15 @@ void loop() {
     first_step(30, clockwise);
     //switch1 = digitalRead(limitswitch);
     
-    Serial.println(current);
+    Serial.println(current)
   //}
   
 }
 
-void solve(int n1, int n2, int n3) {
-  first_step(n1, clockwise);
-  second_step(n2, counterclockwise);
-  third_step(n3, clockwise);
+void solve(int n_1, int n_2, int n_3) {
+  first_step(n_1, clockwise);
+  second_step(n_2, counterclockwise);
+  third_step(n_3, clockwise);
 }
 
 void first_step(int deg, int orientation) {
@@ -72,4 +77,16 @@ void go_to_degree(int deg, int orientation) {
   
   
   motor.step(dist * SPD, orientation, stepType);
+}
+
+void get_n1() {
+    for (int i = 0; i < 10; ++i) {
+        n1[i] = (4 * i) + (n3 % 4);
+    }
+}
+
+void get_n2() {
+    for (int i = 0; i < 10; ++i) {
+        n2[i] = (n1[i] + 2) % 40;
+    }
 }
